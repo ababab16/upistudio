@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upi</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+        
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+        
+        .cat {
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .cat:hover {
+            animation: jump 0.5s ease;
+        }
+        
+        .cat:active {
+            transform: scale(0.95);
+        }
+        
+        @keyframes jump {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-40px) rotate(5deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(-2deg); }
+            50% { transform: translateY(-20px) rotate(0deg); }
+            75% { transform: translateY(-15px) rotate(2deg); }
+        }
+        
+        .name {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            font-family: 'Comic Sans MS', cursive;
+            animation: glow 2s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+        
+        .cat:hover .name {
+            font-size: 42px;
+            color: #ffff00;
+            animation: bounce 0.5s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            25% { transform: translateX(-50%) translateY(-10px); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+            75% { transform: translateX(-50%) translateY(-8px); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { text-shadow: 3px 3px 6px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.3); }
+            50% { text-shadow: 3px 3px 6px rgba(0,0,0,0.3), 0 0 30px rgba(255,255,255,0.6); }
+        }
+        
+        .head {
+            width: 120px;
+            height: 100px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .ear {
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 50px solid #1a1a1a;
+            position: absolute;
+            top: -30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .ear.left { left: 10px; transform: rotate(-20deg); }
+        .ear.right { right: 10px; transform: rotate(20deg); }
+        
+        .cat:hover .ear.left { transform: rotate(-35deg); }
+        .cat:hover .ear.right { transform: rotate(35deg); }
+        
+        .ear-inner {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid #2a2a2a;
+            position: absolute;
+            top: 10px;
+            left: -15px;
+        }
+        
+        .eye {
+            width: 15px;
+            height: 20px;
+            background: #00ff00;
+            border-radius: 50%;
+            position: absolute;
+            top: 35px;
+            animation: blink 4s infinite, eyeGlow 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes blink {
+            0%, 96%, 100% { height: 20px; }
+            98% { height: 2px; }
+        }
+        
+        @keyframes eyeGlow {
+            0%, 100% { box-shadow: 0 0 5px #00ff00; }
+            50% { box-shadow: 0 0 15px #00ff00, 0 0 25px #00ff00; }
+        }
+        
+        .eye.left { left: 30px; }
+        .eye.right { right: 30px; }
+        
+        .pupil {
+            width: 8px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 4px;
+            left: 3.5px;
+        }
+        
+        .nose {
+            width: 12px;
+            height: 10px;
+            background: #ff69b4;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 30px;
+            left: 54px;
+            animation: noseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes noseGlow {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(255, 105, 180, 0.8); }
+        }
+        
+        .mouth {
+            width: 20px;
+            height: 10px;
+            border: 2px solid #333;
+            border-top: none;
+            border-radius: 0 0 50% 50%;
+            position: absolute;
+            bottom: 18px;
+            left: 50px;
+        }
+        
+        .whisker {
+            width: 40px;
+            height: 2px;
+            background: #333;
+            position: absolute;
+            top: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .whisker.left1 { left: -35px; transform: rotate(-10deg); }
+        .whisker.left2 { left: -35px; top: 60px; transform: rotate(10deg); }
+        .whisker.right1 { right: -35px; transform: rotate(10deg); }
+        .whisker.right2 { right: -35px; top: 60px; transform: rotate(-10deg); }
+        
+        .cat:hover .whisker.left1 { transform: rotate(-25deg); }
+        .cat:hover .whisker.left2 { transform: rotate(25deg); }
+        .cat:hover .whisker.right1 { transform: rotate(25deg); }
+        .cat:hover .whisker.right2 { transform: rotate(-25deg); }
+        
+        .body {
+            width: 100px;
+            height: 120px;
+            background: #1a1a1a;
+            border-radius: 50% 50% 40% 40%;
+            position: relative;
+            top: -20px;
+            left: 10px;
+            z-index: 1;
+        }
+        
+        .paw {
+            width: 20px;
+            height: 30px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -15px;
+        }
+        
+        .paw.left { left: 15px; }
+        .paw.right { right: 15px; }
+        
+        .paw-pad {
+            width: 8px;
+            height: 8px;
+            background: #2a2a2a;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 5px;
+            left: 6px;
+        }
+        
+        .tail {
+            width: 80px;
+            height: 80px;
+            border: 15px solid #1a1a1a;
+            border-color: #1a1a1a transparent transparent transparent;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 20px;
+            right: -50px;
+            transform: rotate(45deg);
+            animation: wag 2s ease-in-out infinite;
+        }
+        
+        @keyframes wag {
+            0%, 100% { transform: rotate(45deg); }
+            50% { transform: rotate(60deg); }
+        }
+        
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff69b4;
+            transform: rotate(-45deg);
+            animation: floatHeart 3s ease-in-out infinite;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff69b4;
+            border-radius: 50%;
+        }
+        
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        
+        .heart:after {
+            left: 10px;
+            top: 0;
+        }
+        
+        @keyframes floatHeart {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(-45deg) scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(-45deg) scale(1);
+            }
+        }
+        
+        .paws-up {
+            animation: celebrate 0.5s ease;
+        }
+        
+        @keyframes celebrate {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="cat">
+        <div class="head">
+            <div class="ear left">
+                <div class="ear-inner"></div>
+            </div>
+            <div class="ear right">
+                <div class="ear-inner"></div>
+            </div>
+            <div class="eye left">
+                <div class="pupil"></div>
+            </div>
+            <div class="eye right">
+                <div class="pupil"></div>
+            </div>
+            <div class="nose"></div>
+            <div class="mouth"></div>
+            <div class="whisker left1"></div>
+            <div class="whisker left2"></div>
+            <div class="whisker right1"></div>
+            <div class="whisker right2"></div>
+        </div>
+        <div class="body">
+            <div class="tail"></div>
+            <div class="paw left">
+                <div class="paw-pad"></div>
+            </div>
+            <div class="paw right">
+                <div class="paw-pad"></div>
+            </div>
+        </div>
+        <div class="name">Upi</div>
+    </div>
+    
+    <script>
+        const starsContainer = document.querySelector('.stars');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+        
+        const cat = document.querySelector('.cat');
+        const body = document.querySelector('.body');
+        let clickCount = 0;
+        
+        cat.addEventListener('click', () => {
+            clickCount++;
+            cat.style.animation = 'jump 0.5s ease';
+            
+            // Buat hati terbang
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = '50%';
+            heart.style.top = '20px';
+            cat.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+            
+            setTimeout(() => {
+                cat.style.animation = 'float 3s ease-in-out infinite';
+            }, 500);
+        });
+        
+        cat.addEventListener('dblclick', () => {
+            body.classList.add('paws-up');
+            
+            // Buat banyak hati
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.style.left = (Math.random() * 100 - 50) + 'px';
+                    heart.style.top = '20px';
+                    heart.style.animationDelay = (i * 0.1) + 's';
+                    cat.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+            
+            setTimeout(() => {
+                body.classList.remove('paws-up');
+            }, 500);
+        });
+        
+        // Gerakan mata mengikuti kursor
+        document.addEventListener('mousemove', (e) => {
+            const eyes = document.querySelectorAll('.pupil');
+            const catRect = cat.getBoundingClientRect();
+            const catCenterX = catRect.left + catRect.width / 2;
+            const catCenterY = catRect.top + catRect.height / 2;
+            
+            const angle = Math.atan2(e.clientY - catCenterY, e.clientX - catCenterX);
+            const distance = Math.min(3, Math.hypot(e.clientX - catCenterX, e.clientY - catCenterY) / 100);
+            
+            eyes.forEach(eye => {
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+                eye.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+        
+        // Easter egg: ketik "meong"
+        let keys = [];
+        document.addEventListener('keypress', (e) => {
+            keys.push(e.key);
+            keys = keys.slice(-5);
+            
+            if (keys.join('') === 'meong') {
+                cat.style.animation = 'spin 1s ease';
+                setTimeout(() => {
+                    cat.style.animation = 'float 3s ease-in-out infinite';
+                }, 1000);
+            }
+        });
+        
+        const spinKeyframes = `
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        const style = document.createElement('style');
+        style.textContent = spinKeyframes;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html><ALOASK-SEPARATE-EDITORS><ALOASK-SEPARATE-EDITORS>
